@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    container_name: spring_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: "mongodb://admin:admin123@mongodb:27017/testdb?authSource=admin"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: testdb
+    volumes:
+      - ./mongo-data:/data/db
